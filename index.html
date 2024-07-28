@@ -1,30 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Text Classification App</title>
-    <script>
-        async function sendQuery() {
-            const queryText = document.getElementById("query").value;
-            const response = await fetch("http://localhost:5000/query", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ query: queryText })
-            });
-            const result = await response.json();
-            document.getElementById("response").innerText = "Response: " + result.response;
-        }
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Matching Application</title>
 </head>
 <body>
-    <h1>Text Classification App</h1>
-    <textarea id="query" rows="4" cols="50"></textarea>
-    <br>
-    <button onclick="sendQuery()">Submit</button>
-    <div id="response"></div>
+    <div class="container">
+        <h1>Profile Matching Application</h1>
+        <form method="post" action="/predict">
+            <textarea name="job_description" placeholder="Enter job description here..." required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        {% if results %}
+        <div id="results">
+            <h2>Top 10 Matching Profiles:</h2>
+            <ul>
+                {% for profile in results %}
+                <li>
+                    <ul>
+                        {% for key, value in profile.items() %}
+                        <li><strong>{{ key }}:</strong> {{ value }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
-></div>
+}
+    </div>
 </body>
 </html>
